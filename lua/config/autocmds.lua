@@ -17,32 +17,11 @@ autocmd("BufWritePost", {
 autocmd("FileType", {
   pattern = { "markdown", "wiki" },
   callback = function()
+    vim.opt.spell = true
+    vim.opt.spelllang = "en_us"
     -- Map Enter to follow/create wiki links
     vim.api.nvim_buf_set_keymap(0, "n", "<CR>", "<Plug>(wiki-link-follow)", { silent = true })
     -- Map backspace to go back
     vim.api.nvim_buf_set_keymap(0, "n", "<BS>", "<Plug>(wiki-link-return)", { silent = true })
   end,
 })
-
--- delay cmp completion workaround
--- taken from https://github.com/hrsh7th/nvim-cmp/issues/715
--- local timer = nil
--- local DELAY = 500
--- autocmd({ "TextChangedI", "CmdlineChanged" }, {
---   pattern = "*",
---   callback = function()
---     if timer then
---       vim.loop.timer_stop(timer)
---       timer = nil
---     end
---
---     timer = vim.loop.new_timer()
---     timer:start(
---       DELAY,
---       0,
---       vim.schedule_wrap(function()
---         require("cmp").complete({ reason = require("cmp").ContextReason.Auto })
---       end)
---     )
---   end,
--- })
