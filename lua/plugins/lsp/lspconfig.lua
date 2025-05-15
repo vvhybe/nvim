@@ -2,8 +2,13 @@ return {
   "neovim/nvim-lspconfig",
   event = "LazyFile",
   dependencies = {
-    "mason.nvim",
-    { "williamboman/mason-lspconfig.nvim", config = function() end },
+    -- Make sure mason.nvim is a proper reference to the plugin
+    "williamboman/mason.nvim",
+    -- Fix the mason-lspconfig plugin configuration
+    {
+      "williamboman/mason-lspconfig.nvim",
+      -- Remove the empty config function
+    },
   },
   opts = function()
     ---@class PluginLspOpts
@@ -333,7 +338,11 @@ return {
     local have_mason, mlsp = pcall(require, "mason-lspconfig")
     local all_mslp_servers = {}
     if have_mason then
-      all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
+      -- Fix the error by checking if mappings.server exists before accessing it
+      local mapping_ok, mapping = pcall(require, "mason-lspconfig.mappings.server")
+      if mapping_ok then
+        all_mslp_servers = vim.tbl_keys(mapping.lspconfig_to_package)
+      end
     end
 
     local ensure_installed = {} ---@type string[]

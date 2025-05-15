@@ -1,7 +1,5 @@
-vim.g.lazyvim_check_order = false
-
+-- bootstrap lazy.nvim, LazyVim and your plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -15,26 +13,18 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
-
 vim.opt.rtp:prepend(lazypath)
 
--- bootstrap lazy.nvim, LazyVim shared core configuration
-require("config.autocmds")
-require("config.keymaps")
-require("config.autocmds")
-
 require("lazy").setup({
-  install = { colorscheme = { "nightfox" } },
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
-    { import = "plugins.editor" },
-    { import = "plugins.editor.git" },
-    { import = "plugins.editor.markdown" },
-    { import = "plugins.ui" },
+    { import = "plugins" },
+    { import = "plugins.git" },
+    { import = "plugins.lsp" },
+    { import = "plugins.markdown" },
   },
-
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
@@ -44,12 +34,11 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
-
   performance = {
     rtp = {
       -- disable some rtp plugins
@@ -66,16 +55,3 @@ require("lazy").setup({
     },
   },
 })
-
--- Load the appropriate profile based on the NVIM_PROFILE environment variable
--- local profile = os.getenv("NVIM_PROFILE") or "default"
--- local profile_config = string.format("profiles.%s", profile)
-
--- -- Load profile-specific configuration
--- local ok, profile_module = pcall(require, profile_config)
--- if not ok then
---   vim.notify(string.format("Profile '%s' not found. Loading default profile.", profile), vim.log.levels.WARN)
---   require("profiles.default")
--- else
---   profile_module.setup()
--- end
