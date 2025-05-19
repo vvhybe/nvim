@@ -9,19 +9,46 @@ return {
   --   end,
   -- },
 
+  -- {
+  --   "catppuccin/nvim",
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd.colorscheme("catppuccin-mocha")
+  --   end,
+  -- },
+
+  -- {
+  --   "AlexvZyl/nordic.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme("nordic")
+  --   end,
+  -- },
+
   {
-    "tiagovla/tokyodark.nvim",
-    priority = 1000,
+    "EdenEast/nightfox.nvim",
     lazy = false,
+    priority = 1000,
     config = function()
-      vim.cmd.colorscheme("tokyodark")
+      vim.cmd.colorscheme("carbonfox")
     end,
   },
+
+  -- {
+  --   "tiagovla/tokyodark.nvim",
+  --   priority = 1000,
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd.colorscheme("tokyodark")
+  --   end,
+  -- },
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "tokyodark",
+      colorscheme = "carbonfox",
     },
   },
 }
