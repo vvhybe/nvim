@@ -78,6 +78,7 @@ return {
         html = { "prettier" },
         json = { "prettier" },
         graphql = { "prettier" },
+        python = { "isort", "black", "prettier" },
       },
     },
   },
