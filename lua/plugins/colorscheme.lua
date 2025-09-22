@@ -27,14 +27,14 @@ return {
   --   end,
   -- },
 
-  {
-    "EdenEast/nightfox.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme("carbonfox")
-    end,
-  },
+  -- {
+  --   "EdenEast/nightfox.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme("carbonfox")
+  --   end,
+  -- },
 
   -- {
   --   "tiagovla/tokyodark.nvim",
@@ -46,9 +46,18 @@ return {
   -- },
 
   {
+    "yorumicolors/yorumi.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("yorumi")
+    end,
+  },
+
+  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "carbonfox",
+      colorscheme = "yorumi",
     },
   },
 }

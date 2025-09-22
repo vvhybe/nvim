@@ -55,6 +55,7 @@ return {
           "isort", -- python formatter
           "black", -- python formatter
           "pylint", -- python linter
+          "mypy", -- python lsp
           "eslint_d", -- javascript linter
         },
       })
