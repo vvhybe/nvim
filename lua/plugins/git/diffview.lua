@@ -4,7 +4,7 @@ return {
     "sindrets/diffview.nvim",
     dependencies = {
       -- { "nvim-tree/nvim-web-devicons", lazy = true },
-      { "echasnovski/mini.icons", lazy = true },
+      { "nvim-mini/mini.icons", lazy = true },
     },
   },
 }

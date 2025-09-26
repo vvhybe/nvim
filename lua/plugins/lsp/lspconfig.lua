@@ -2,12 +2,9 @@ return {
   "neovim/nvim-lspconfig",
   event = "LazyFile",
   dependencies = {
-    -- Make sure mason.nvim is a proper reference to the plugin
-    "williamboman/mason.nvim",
-    -- Fix the mason-lspconfig plugin configuration
+    "mason-org/mason.nvim",
     {
-      "williamboman/mason-lspconfig.nvim",
-      -- Remove the empty config function
+      "mason-org/mason-lspconfig.nvim",
     },
   },
   opts = function()
@@ -371,15 +368,29 @@ return {
       })
     end
 
-    if LazyVim.lsp.is_enabled("denols") and LazyVim.lsp.is_enabled("vtsls") then
+    -- Safe Deno/TypeScript conflict resolution with fallback
+    local function safe_has_server(server_name)
+      if LazyVim.lsp and type(LazyVim.lsp.has) == "function" then
+        return LazyVim.lsp.has(server_name)
+      else
+        -- Fallback: check if server is configured in opts.servers
+        return opts.servers[server_name] ~= nil
+      end
+    end
+
+    if safe_has_server("denols") and safe_has_server("vtsls") then
       local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-      LazyVim.lsp.disable("vtsls", is_deno)
-      LazyVim.lsp.disable("denols", function(root_dir, config)
-        if not is_deno(root_dir) then
-          config.settings.deno.enable = false
-        end
-        return false
-      end)
+
+      -- Use safe calls for disable function
+      if LazyVim.lsp and type(LazyVim.lsp.disable) == "function" then
+        LazyVim.lsp.disable("vtsls", is_deno)
+        LazyVim.lsp.disable("denols", function(root_dir, config)
+          if not is_deno(root_dir) then
+            config.settings.deno.enable = false
+          end
+          return false
+        end)
+      end
     end
   end,
 }
