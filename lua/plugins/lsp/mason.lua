@@ -81,6 +81,11 @@ return {
         graphql = { "prettier" },
         python = { "isort", "black", "prettier" },
       },
+      -- formatters = {
+      --   isort = {
+      --     prepend_args = { "--skip-glob", "**/__init__.py" },
+      --   },
+      -- },
     },
   },
 
